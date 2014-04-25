@@ -1,30 +1,18 @@
 #!/bin/bash
 # Title: tsm.sh
-# Version: 1.0 Beta 2
 # Description: Script to gather data from TSM and report back to zabbix.
-# Author: Chris S. / [wings4marie @ gmail DOT com] / [IRC: Parabola@Freenode]
-# Modified: 06/21/2012
+# Original Author: Chris S. / [wings4marie @ gmail DOT com] / [IRC: Parabola@Freenode]
+# Author: Chris Jones / [rollercow @ sucs.org] - Mostly tidying
 ###################################################################################
-#
-#################
-#     NOTES     #
-#################
-# I will be updating this as I get time.  If you have any questions or issues, feel free to contact me.
-#
-# 1.) Firstly, this is a work in progress. The functionality is sound, and its stable, however you'll notice some cleaning is needed.
-# 2.) Also, until I get time, to remove the dependency. I've included a couple TSM scripts that a few of the functions are based on (see tsm_scripts.txt)
-# 3.) LogPools/DiskPools - At this time I've yet to find a better way to do this. the looping will send values for all found, however the Key must exist in zabbix
-#     I've created 3 LogPool keys, and 7 Diskpool keys (included in template) you will want to add/remove to match your environment
 #
 #################
 # INSTRUCTIONS  #
 #################
-# 1.) Import/Add the TSM scripts included with this release. File: "tsm_scripts.txt" (They are in MACRO format, ready for copy/paste..See notes for more info)
-# 2.) Put the script in your "externalscripts" directory (specified in the zabbix_server.conf)
-# 3.) Update the variables in the configuration section below
+# 1.) Put this script on your TSM server, or anywhere else with the TSM client installed.
+# 2.) Update the variables in the configuration section below
+# 3.) Import the template into Zabbix (make sure you change the "MAX_TAPES" and "LOW_SCRATCHVOLS" Macros!!)
 # 4.) Verify the schedule section at the bottom of this script meets your needs, I've included my cron entries for reference
-# 5.) Import the template (make sure you change the "MAX_TAPES" and "LOW_SCRATCHVOLS" Macros!!)
-# 6.) Ensure the TSM client is installed on the zabbix server (we need the dsmadmc binary!)
+# 5.) 
 #
 #################
 # CONFIGURATION #
@@ -126,38 +114,14 @@ function tsm_nodes_sessioncount {
 }
 
 function tsm_failedjobs { # Number of jobs marked as "Failed"
-	mkfifo tsmPipeFailed
-	failedLog=$(tsm_cmd "run failedjobs" | sed '1,12d' | sed -e :a -e '$d;N;2,4ba' -e 'P;D' | awk '{print $1,$2,$5,$6,$7}' | sed '$d' | sed -n 'p;N' | grep -v Missed)
-	if [[ $(echo $failedLog) == *Failed* ]]; then
-		echo "$failedLog" > tsmPipeFailed & 
-		while read line; do
-			failedInt=$(($failedInt+1))
-			tsm_failed_subject="Monitoring - TSM - Failed backup for host $(echo $line | awk '{print $4}')"
-			open_ticket "$line"
-		done < tsmPipeFailed
-		send_value tsm.jobs.failed "$failedInt"
-	fi
-	rm -f tsmPipeFailed
+	failedInt=$(tsm_cmd "query event * *  begind=today-1 begint=00:00:00 endd=today-1 endt=23:59:59 exceptionsonly=yes" | grep Failed | wc -l)
+	send_value tsm.jobs.missed "$failedInt"
 }
 
 function tsm_missedjobs { # Number of jobs marked as "Missed"
-	mkfifo tsmPipeMissed
-	missedLog=$(tsm_cmd "run failedjobs" | sed '1,12d' | sed -e :a -e '$d;N;2,4ba' -e 'P;D' | awk '{print $1,$2,$4,$5,$6,$7}' | sed '$d' | sed -n 'p;N' | grep -v Failed)
-	if [[ $(echo $missedLog) == *Missed* ]]; then
-		echo "$missedLog" > tsmPipeMissed & 
-		while read line; do
-			missedInt=$(($missedInt+1))
-			tsm_failed_subject="Monitoring - TSM - Missed backup for host $(echo $line | awk '{print $3}')"
-			open_ticket "$line"
-		done < tsmPipeMissed
-		send_value tsm.jobs.missed "$missedInt"
-		rm -f tsmPipeMissed
-	else
-		send_value tsm.jobs.missed 0
-	fi
+	missedInt=$(tsm_cmd "query event * *  begind=today-1 begint=00:00:00 endd=today-1 endt=23:59:59 exceptionsonly=yes" | grep Missed | wc -l)
+	send_value tsm.jobs.missed "$missedInt"
 }
-
-
 
 function tsm_summary_24hrs { 
         summary=$(tsm_cmd "SELECT activity,cast(float(sum(bytes))/1024/1024/1024 as dec(8,2)) as "GB" FROM summary where end_time>current_timestamp-24 hours GROUP BY activity")

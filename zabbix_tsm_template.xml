@@ -212,7 +212,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Jobs</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -246,7 +246,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Jobs</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -382,7 +382,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -416,7 +416,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -450,7 +450,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -484,7 +484,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -518,7 +518,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -552,7 +552,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -586,7 +586,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -620,7 +620,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -654,7 +654,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>%</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
