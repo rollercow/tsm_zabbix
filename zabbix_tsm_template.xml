@@ -884,14 +884,14 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.total.stored" value_type="0">
+        <item type="2" key="tsm.summary.total.stored" value_type="3">
           <description>TSM - Summary - Total Amount of Data Stored</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
-          <data_type>2</data_type>
+          <data_type>0</data_type>
           <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>

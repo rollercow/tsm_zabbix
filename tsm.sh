@@ -170,7 +170,7 @@ function tsm_summary_24hrs {
 
 
 function tsm_summary_total_stored { # Total data stored in TB
-	totalStored=$(tsm_cmd "SELECT SUM(logical_mb)*1024*1024 FROM occupancy")
+	totalStored=$(tsm_cmd "SELECT cast(SUM(logical_mb)*1024*1024 as bigint) FROM occupancy")
 	send_value tsm.summary.total.stored "$totalStored"
 }
 
