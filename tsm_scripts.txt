@@ -1,0 +1,12 @@
+DEFINE SCRIPT  FAILEDJOBS DESC="Displays any failed backups for the last 24hrs"
+UPDATE SCRIPT  FAILEDJOBS "query event * *  begind=today-1 begint=00:00:00 endd=today-1 endt=23:59:59 exceptionsonly=yes"
+
+DEFINE SCRIPT  SCRATCHVOLS DESC="Report scratch volumes"
+UPDATE SCRIPT  SCRATCHVOLS "/*----------------------------------------------*/"
+UPDATE SCRIPT  SCRATCHVOLS "/* Script Name: scratchvols                        */"
+UPDATE SCRIPT  SCRATCHVOLS "/* Description: Report scratch volumes */"
+UPDATE SCRIPT  SCRATCHVOLS "/* Usage: run scratchvols          */"
+UPDATE SCRIPT  SCRATCHVOLS "/*----------------------------------------------*/"
+UPDATE SCRIPT  SCRATCHVOLS "select count(*) Scratch_Vols from libvolumes where status='Scratch'"
+UPDATE SCRIPT  SCRATCHVOLS "select count(*) Private_Vols from libvolumes where status='Private'"
+UPDATE SCRIPT  SCRATCHVOLS "select count(*) Total_Vols from libvolumes"
