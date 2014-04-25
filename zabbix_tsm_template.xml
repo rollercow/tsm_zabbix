@@ -348,7 +348,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>Nodes</units>
+          <units>Sessions</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -680,7 +680,41 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.daily.backup" value_type="0">
+        <item type="2" key="tsm.summary.daily.archive" value_type="3">
+          <description>TSM - Daily Summary - Archived</description>
+          <ipmi_sensor></ipmi_sensor>
+          <delay>60</delay>
+          <history>30</history>
+          <trends>365</trends>
+          <status>0</status>
+          <data_type>0</data_type>
+          <units>B</units>
+          <multiplier>0</multiplier>
+          <delta>0</delta>
+          <formula>0</formula>
+          <lastlogsize>0</lastlogsize>
+          <logtimefmt></logtimefmt>
+          <delay_flex></delay_flex>
+          <authtype>0</authtype>
+          <username></username>
+          <password></password>
+          <publickey></publickey>
+          <privatekey></privatekey>
+          <params></params>
+          <trapper_hosts></trapper_hosts>
+          <snmp_community></snmp_community>
+          <snmp_oid></snmp_oid>
+          <snmp_port>161</snmp_port>
+          <snmpv3_securityname></snmpv3_securityname>
+          <snmpv3_securitylevel>0</snmpv3_securitylevel>
+          <snmpv3_authpassphrase></snmpv3_authpassphrase>
+          <snmpv3_privpassphrase></snmpv3_privpassphrase>
+          <valuemapid>0</valuemapid>
+          <applications>
+            <application>TSM</application>
+          </applications>
+        </item>
+        <item type="2" key="tsm.summary.daily.backup" value_type="3">
           <description>TSM - Daily Summary - Backed up</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
@@ -688,7 +722,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>GB</units>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -714,7 +748,7 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.daily.dbbackup" value_type="0">
+        <item type="2" key="tsm.summary.daily.full_dbbackup" value_type="3">
           <description>TSM - Daily Summary - Database Backup</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
@@ -722,7 +756,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>GB</units>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -748,7 +782,7 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.daily.migration" value_type="0">
+        <item type="2" key="tsm.summary.daily.migration" value_type="3">
           <description>TSM - Daily Summary - Data Migrated</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
@@ -756,7 +790,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>GB</units>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -782,7 +816,7 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.daily.offsite" value_type="0">
+        <item type="2" key="tsm.summary.daily.offsitereclamation" value_type="3">
           <description>TSM - Daily Summary - Offsite Reclamation</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
@@ -790,7 +824,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>GB</units>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -816,7 +850,75 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.daily.retrieve" value_type="0">
+        <item type="2" key="tsm.summary.daily.reclamation" value_type="3">
+          <description>TSM - Daily Summary - Reclamation</description>
+          <ipmi_sensor></ipmi_sensor>
+          <delay>60</delay>
+          <history>30</history>
+          <trends>365</trends>
+          <status>0</status>
+          <data_type>0</data_type>
+          <units>B</units>
+          <multiplier>0</multiplier>
+          <delta>0</delta>
+          <formula>0</formula>
+          <lastlogsize>0</lastlogsize>
+          <logtimefmt></logtimefmt>
+          <delay_flex></delay_flex>
+          <authtype>0</authtype>
+          <username></username>
+          <password></password>
+          <publickey></publickey>
+          <privatekey></privatekey>
+          <params></params>
+          <trapper_hosts></trapper_hosts>
+          <snmp_community></snmp_community>
+          <snmp_oid></snmp_oid>
+          <snmp_port>161</snmp_port>
+          <snmpv3_securityname></snmpv3_securityname>
+          <snmpv3_securitylevel>0</snmpv3_securitylevel>
+          <snmpv3_authpassphrase></snmpv3_authpassphrase>
+          <snmpv3_privpassphrase></snmpv3_privpassphrase>
+          <valuemapid>0</valuemapid>
+          <applications>
+            <application>TSM</application>
+          </applications>
+        </item>
+        <item type="2" key="tsm.summary.daily.restore" value_type="3">
+          <description>TSM - Daily Summary - Data Restored</description>
+          <ipmi_sensor></ipmi_sensor>
+          <delay>60</delay>
+          <history>30</history>
+          <trends>365</trends>
+          <status>0</status>
+          <data_type>0</data_type>
+          <units>B</units>
+          <multiplier>0</multiplier>
+          <delta>0</delta>
+          <formula>0</formula>
+          <lastlogsize>0</lastlogsize>
+          <logtimefmt></logtimefmt>
+          <delay_flex></delay_flex>
+          <authtype>0</authtype>
+          <username></username>
+          <password></password>
+          <publickey></publickey>
+          <privatekey></privatekey>
+          <params></params>
+          <trapper_hosts></trapper_hosts>
+          <snmp_community></snmp_community>
+          <snmp_oid></snmp_oid>
+          <snmp_port>161</snmp_port>
+          <snmpv3_securityname></snmpv3_securityname>
+          <snmpv3_securitylevel>0</snmpv3_securitylevel>
+          <snmpv3_authpassphrase></snmpv3_authpassphrase>
+          <snmpv3_privpassphrase></snmpv3_privpassphrase>
+          <valuemapid>0</valuemapid>
+          <applications>
+            <application>TSM</application>
+          </applications>
+        </item>
+        <item type="2" key="tsm.summary.daily.retrieve" value_type="3">
           <description>TSM - Daily Summary - Data Retrieved</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
@@ -824,7 +926,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>GB</units>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -850,7 +952,7 @@
             <application>TSM</application>
           </applications>
         </item>
-        <item type="2" key="tsm.summary.daily.stgpool" value_type="0">
+        <item type="2" key="tsm.summary.daily.stgpoolbackup" value_type="3">
           <description>TSM - Daily Summary - Storage Pool Backed up</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
@@ -858,7 +960,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units>GB</units>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -1248,7 +1350,7 @@
               <type>0</type>
               <periods_cnt>5</periods_cnt>
             </graph_element>
-            <graph_element item="Template_Tivoli_Storage_Manager:tsm.summary.daily.stgpool">
+            <graph_element item="Template_Tivoli_Storage_Manager:tsm.summary.daily.stgpoolbackup">
               <drawtype>2</drawtype>
               <sortorder>1</sortorder>
               <color>FF9999</color>
@@ -1257,7 +1359,7 @@
               <type>0</type>
               <periods_cnt>5</periods_cnt>
             </graph_element>
-            <graph_element item="Template_Tivoli_Storage_Manager:tsm.summary.daily.dbbackup">
+            <graph_element item="Template_Tivoli_Storage_Manager:tsm.summary.daily.full_dbbackup">
               <drawtype>2</drawtype>
               <sortorder>2</sortorder>
               <color>9999FF</color>
@@ -1266,7 +1368,7 @@
               <type>0</type>
               <periods_cnt>5</periods_cnt>
             </graph_element>
-            <graph_element item="Template_Tivoli_Storage_Manager:tsm.summary.daily.offsite">
+            <graph_element item="Template_Tivoli_Storage_Manager:tsm.summary.daily.offsitereclamation">
               <drawtype>2</drawtype>
               <sortorder>3</sortorder>
               <color>FFFF99</color>

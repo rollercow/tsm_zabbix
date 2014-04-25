@@ -124,11 +124,14 @@ function tsm_missedjobs { # Number of jobs marked as "Missed"
 }
 
 function tsm_summary_24hrs { 
-        summary=$(tsm_cmd "SELECT activity,cast(float(sum(bytes))/1024/1024/1024 as dec(8,2)) as "GB" FROM summary where end_time>current_timestamp-24 hours GROUP BY activity")
-
-        for jobtype in ARCHIVE BACKUP EXPIRATION FULL_DBBACKUP MIGRATION OFFSITERECLAMATION RECLAMATION RESTORE RETRIEVE STGPOOLBACKUP TAPEMOUNT
+        summary=$(tsm_cmd "SELECT activity,sum(bytes) FROM summary where end_time>current_timestamp-24 hours GROUP BY activity" | sed 's/ //')
+        for jobtype in archive backup full_dbbackup migration offsitereclamation reclamation restore retrieve stgpoolbackup 
         do
-                send_value tsm.summary.daily.$jobtype $(echo "$summary" | grep $jobtype | awk {'print $2'})
+                echo "$summary" | grep -i $jobtype > /dev/null
+                if [ $? = 0 ]
+                then
+                    send_value tsm.summary.daily.$jobtype $(echo "$summary" | grep -i $jobtype | awk {'print $2'})
+                fi
         done
 }
 
