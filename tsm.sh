@@ -5,6 +5,8 @@
 # Author: Chris Jones / [rollercow @ sucs.org] - Mostly tidying
 ###################################################################################
 #
+# Tested with TSM 6.2 and zabbix 2.0.11
+#
 #################
 # INSTRUCTIONS  #
 #################
@@ -123,7 +125,7 @@ function tsm_missedjobs { # Number of jobs marked as "Missed"
 	send_value tsm.jobs.missed "$missedInt"
 }
 
-function tsm_summary_24hrs { 
+function tsm_summary_24hrs { #Data in B by activity
         summary=$(tsm_cmd "SELECT activity,sum(bytes) FROM summary where end_time>current_timestamp-24 hours GROUP BY activity" | sed 's/ //')
         for jobtype in archive backup full_dbbackup migration offsitereclamation reclamation restore retrieve stgpoolbackup 
         do
@@ -135,8 +137,7 @@ function tsm_summary_24hrs {
         done
 }
 
-
-function tsm_summary_total_stored { # Total data stored in TB
+function tsm_summary_total_stored { # Total data stored in B
 	totalStored=$(tsm_cmd "SELECT cast(SUM(logical_mb)*1024*1024 as bigint) FROM occupancy")
 	send_value tsm.summary.total.stored "$totalStored"
 }
@@ -147,47 +148,37 @@ function tsm_summary_total_stored { # Total data stored in TB
 ###############################################################################
 # Place functions within each Category for execution 						  #
 # INFO: (Use Cron)				    										  #
-# daily_morning - Scheduled for 8am, 7 days a week   						  #
-# daily_afternoon - 2pm Mon - Saturday		   	     						  #
-# hourly_jobs - Run every 60 minutes  									   	  #
+# daily - Scheduled for 8am, 7 days a week   						          #
+# hourly - Run every 60 minutes  		    							   	  #
 # Below are my Cron entries			               							  #
 # 																			  #
-# 0 8 * * 1,2,3,4,5,6 /bin/bash "/etc/zabbix/externalscripts/tsm.sh" morning  #
-# 0 14 * * * /bin/bash "/etc/zabbix/externalscripts/tsm.sh" afternoon         #
+# 0 8 * * * /bin/bash "/etc/zabbix/externalscripts/tsm.sh" daily              #
 # 0,60 * * * * /bin/bash "/etc/zabbix/externalscripts/tsm.sh" hourly          #
 #																			  #
 ###############################################################################
-function daily_morning {
-	tsm_scratchvols	
-	tsm_failedjobs
-	tsm_missedjobs
-	tsm_summary_24hrs
-	tsm_summary_total_stored
+function daily {
+    tsm_missedjobs
+    tsm_failedjobs
+    tsm_summary_24hrs
 }
 
-function daily_afternoon {
-	tsm_consolidate
-}
-
-function hourly_jobs {
-	tsm_totalvols
-	tsm_diskpool_usage
-	tsm_logpool_usage
-	tsm_consolidate_num
-	tsm_nodes_count
-	tsm_nodes_locked
-	tsm_nodes_sessioncount
-	tsm_drives_offline
-	tsm_drives_loaded
-	tsm_drives_empty
-	tsm_tapes_errors
+function hourly {
+    tsm_scratchvols
+    tsm_totalvols
+    tsm_consolidate_num
+    tsm_tapes_errors
+    tsm_drives_offline 
+    tsm_drives_loaded
+    tsm_drives_empty
+    tsm_nodes_count
+    tsm_nodes_locked
+    tsm_nodes_sessioncount
+    tsm_summary_total_stored
 }
 
 if [[ "$1" == *hourly* ]]; then
-	hourly_jobs
-elif [[ "$1" == *morning* ]]; then
-	daily_morning
-elif [[ "$1" == *afternoon* ]]; then
-	daily_afternoon
-else echo " "
+	hourly
+elif [[ "$1" == *daily* ]]; then
+	daily
+else echo "Useage: tsm.sh [hourly|daily]"
 fi
