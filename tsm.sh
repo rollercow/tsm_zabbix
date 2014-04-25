@@ -29,56 +29,100 @@
 #################
 # CONFIGURATION #
 #################
-zabbix_server="localhost" # Enter the hostname or IP of the zabbix server
-zabbix_sender="/usr/local/bin/zabbix_sender"
-zabbix_nodename="Zabbix server"		# Hostname in zabbix, I've left the default zabbix server name.
-tsm_binary="/opt/tivoli/tsm/client/ba/bin/dsmadmc" # Path to the admin CLI binary tool
-tsm_user="TSM_USER" # TSM username
-tsm_pass="TSM_PASS" # TSM Password
-serviceDesk_support=1 # 1=on / 2=off. If you're using serviceDesk for ticketing, below is an open_ticket function, simply update the categories to match
-serviceDesk_url="http://SERVERNAME.DOMAIN.com:80/servlets/RequestServlet" # URL for serviceDesk (unused if serviceDesk support is disabled)
-serviceDesk_user="SERVICEDESK_USER"
-serviceDesk_pass="SERVICEDESK_PASS"
+zabbix_sender="/usr/bin/zabbix_sender"
+zabbix_config="/etc/zabbix_agentd.conf"
+tsm_binary="/usr/bin/dsmadmc" # Path to the admin CLI binary tool
+tsm_user="ID" # TSM username
+tsm_pass="PASSWORD" # TSM Password
 
 #################
 #  FUNCTIONS    #
 #################
 function send_value {
-	"$zabbix_sender" -vvv --zabbix-server "$zabbix_server" --host "$zabbix_nodename" --key $1 --value $2
+	"$zabbix_sender" -c $zabbix_config -k $1 -o $2
 }
 
 function tsm_cmd {
-	"$tsm_binary" -id=$tsm_user -pa=$tsm_pass $1
+	"$tsm_binary" -id=$tsm_user -pa=$tsm_pass -dataonly=yes "$1" | grep -v ANS0102W # shuts up persistent warning
 }
 
-function tsm_scratchvols { # Total number of scratch volumes
-	scratchvols=$(tsm_cmd "run scratchvols" | sed -n '13p' | sed 's/^[ \t]*//')
+#################
+#  TAPE STATS   #
+#################
+
+function tsm_scratchvols { # Number of scratch volumes
+	scratchvols=$(tsm_cmd "select count(*) Scratch_Vols from libvolumes where status='Scratch'")
 	send_value tsm.tapes.scratchvols "$scratchvols"
 }
-
 function tsm_totalvols { # Total number of volumes
-	totalvols=$(tsm_cmd "run scratchvols" | sed -n '21p' | sed 's/^[ \t]*//' )
+	totalvols=$(tsm_cmd "select count(*) Total_Vols from libvolumes" )
 	send_value tsm.tapes.totalvols "$totalvols"
 }
+function tsm_consolidate_num { # Number of tapes marked for consolidation
+	volCount=$(tsm_cmd "SELECT count(volume_name) FROM volumes WHERE status='FULL' AND pct_utilized < 30")
+	send_value tsm.tapes.consolidate.count "$volCount"
+}
+function tsm_tapes_errors { # Number of tapes with an error status
+	tapeErrors=$(tsm_cmd "SELECT COUNT(*) FROM volumes WHERE error_state='YES'")
+	send_value tsm.tapes.errors.status "$tapeErrors"
+}
 
-function open_ticket { # Uses curl (version: 7.16+) to open a ticket in serviceDesk (See CONFIGURATION and NOTES for more info)
-	if (($serviceDesk_support == 1)); then
-		echo "YES"
-		curl "$serviceDesk_url" -s \
-			-d operation=AddRequest \
-			--data-urlencode subject="$tsm_failed_subject" \
-			--data-urlencode category="Operating System" \
-			--data-urlencode subcategory="Linux" \
-			--data-urlencode item="Preventive Maintenance" \
-			--data-urlencode group="Linux/AIX Tier 2" \
-			--data-urlencode description="$desc" \
-			--data-urlencode requester="System API" \
-			-d status=Open \
-			--data-urlencode priority="2. Response 1-4 hours" \
-			-d mode=API \
-			-d username="$serviceDesk_user" \
-			-d password="$serviceDesk_pass"
-		fi
+#################
+#  DRIVE STATS  #
+#################
+
+function tsm_drives_offline { # Number of drives marked as offline
+	offlineDrives=$(tsm_cmd "SELECT COUNT(*) FROM drives WHERE NOT online='YES'")
+	send_value tsm.drives.offline.count "$offlineDrives"
+}
+
+function tsm_drives_loaded { # Number of drives with a tape (loaded)
+	loadedDrives=$(tsm_cmd "SELECT COUNT(*) FROM drives WHERE drive_state='LOADED'")
+	send_value tsm.drives.loaded.count "$loadedDrives"
+}
+
+function tsm_drives_empty { # Number of "empty" Drives within your library
+	emptyDrives=$(tsm_cmd "SELECT COUNT(*) FROM drives WHERE drive_state='EMPTY'")
+	send_value tsm.drives.empty.count "$emptyDrives"
+}
+
+#################
+#  POOL  STATS  #
+#################
+
+function tsm_diskpool_usage { # See NOTES
+	diskpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'DISKPOOL' ORDER BY stgpool_name DESC" | tail -n +13 | head -n -3)
+	echo "$diskpool" | while read disk _ num
+	do
+		send_value tsm.pools."${disk:(-5)}" "$num"
+	done
+}
+
+function tsm_logpool_usage { # See NOTES
+	logpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'LOGPOOL' ORDER BY stgpool_name DESC" | tail -n +13 | head -n -3)
+	echo "$logpool" | while read log _ num
+	do 
+		send_value tsm.pools."${log:(-4)}" "$num"
+	done
+}
+
+#################
+#   TSM STATS   #
+#################
+
+function tsm_nodes_count { #Total number of nodes in your TSM environment
+	nodeCount=$(tsm_cmd "SELECT COUNT(*) FROM nodes")
+	send_value tsm.nodes.count "$nodeCount"
+}
+
+function tsm_nodes_locked { # number of nodes marked as locked
+	lockedNodes=$(tsm_cmd "SELECT count(node_name) FROM nodes WHERE locked='YES'")
+	send_value tsm.nodes.locked.count "$lockedNodes"
+}
+
+function tsm_nodes_sessioncount {
+	sessCount=$(tsm_cmd "SELECT COUNT(*) FROM sessions WHERE session_type='Node'")
+	send_value tsm.nodes.sessions.count "$sessCount"
 }
 
 function tsm_failedjobs { # Number of jobs marked as "Failed"
@@ -113,92 +157,20 @@ function tsm_missedjobs { # Number of jobs marked as "Missed"
 	fi
 }
 
-function tsm_diskpool_usage { # See NOTES
-	diskpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'DISKPOOL' ORDER BY stgpool_name DESC" | tail -n +13 | head -n -3)
-	echo "$diskpool" | while read disk _ num
-	do
-		send_value tsm.pools."${disk:(-5)}" "$num"
-	done
+
+
+function tsm_summary_24hrs { 
+        summary=$(tsm_cmd "SELECT activity,cast(float(sum(bytes))/1024/1024/1024 as dec(8,2)) as "GB" FROM summary where end_time>current_timestamp-24 hours GROUP BY activity")
+
+        for jobtype in ARCHIVE BACKUP EXPIRATION FULL_DBBACKUP MIGRATION OFFSITERECLAMATION RECLAMATION RESTORE RETRIEVE STGPOOLBACKUP TAPEMOUNT
+        do
+                send_value tsm.summary.daily.$jobtype $(echo "$summary" | grep $jobtype | awk {'print $2'})
+        done
 }
 
-function tsm_logpool_usage { # See NOTES
-	logpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'LOGPOOL' ORDER BY stgpool_name DESC" | tail -n +13 | head -n -3)
-	echo "$logpool" | while read log _ num
-	do 
-		send_value tsm.pools."${log:(-4)}" "$num"
-	done
-}
-
-function tsm_consolidate { # Takes tapes that are <30% full, that are marked "FULL" and dumps the data back to the storagepool
-	consolidate=$(tsm_cmd "SELECT volume_name,pct_utilized,stgpool_name FROM volumes WHERE status='FULL' AND pct_utilized < 30 ORDER BY pct_utilized ASC" | tail -n +13 | head -n -3)
-	echo "$consolidate" | while read col1 col2 col3
-	do
-		tsm_cmd "move data $col1 stgpool=$col3"
-	done
-}
-
-function tsm_consolidate_num { # Number of tapes marked for consolidation
-	volCount=$(tsm_cmd "SELECT volume_name FROM volumes WHERE status='FULL' AND pct_utilized < 30" | tail -n +13 | head -n -3 | wc -l | cut -c 1-2)
-	send_value tsm.tapes.consolidate.count "$volCount"
-}
-
-function tsm_nodes_count { #Total number of nodes in your TSM environment
-	nodeCount=$(tsm_cmd "SELECT COUNT(*) FROM nodes" | tail -n +13 | head -n -3 | sed 's/^[ \t]*//')
-	send_value tsm.nodes.count "$nodeCount"
-}
-
-function tsm_nodes_locked { # number of nodes marked as locked
-	tsm_failed_subject="Monitoring - TSM - Locked nodes detected"
-	lockedNodes=$(tsm_cmd "SELECT node_name FROM nodes WHERE locked='YES'" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3 | wc -l | cut -c 1-2)
-	send_value tsm.nodes.locked.count "$lockedNodes"
-	if [[ "$lockedNodes" -ge 1 ]];then
-		open_ticket
-	fi
-}
-
-function tsm_nodes_sessioncount {
-	sessCount=$(tsm_cmd "SELECT COUNT(*) FROM sessions WHERE session_type='Node'" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3)
-	send_value tsm.nodes.sessions.count "$sessCount"
-}
-
-function tsm_drives_offline { # Number of drives marked as offline
-	offlineDrives=$(tsm_cmd "SELECT COUNT(*) FROM drives WHERE NOT online='YES'" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3)
-	send_value tsm.drives.offline.count "$offlineDrives"
-}
-
-function tsm_drives_loaded { # Number of drives with a tape (loaded)
-	loadedDrives=$(tsm_cmd "SELECT COUNT(*) FROM drives WHERE drive_state='LOADED'" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3)
-	send_value tsm.drives.loaded.count "$loadedDrives"
-}
-
-function tsm_drives_empty { # Number of "empty" Drives within your library
-	emptyDrives=$(tsm_cmd "SELECT COUNT(*) FROM drives WHERE drive_state='EMPTY'" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3)
-	send_value tsm.drives.empty.count "$emptyDrives"
-}
-
-function tsm_summary_24hrs { #1-backup,2-full_dbbackup,3-migration,4/5-offiste reclimation,6-retrieve,7-stgpool backup
-	summary=$(tsm_cmd "SELECT cast(float(sum(bytes))/1024/1024/1024 as dec(8,2)) as "GB" FROM summary WHERE activity<>'TAPE MOUNT' AND activity<>'EXPIRATION' AND end_time>current_timestamp-24 hours GROUP BY activity"| tail -n +14 | head -n -3 | sed '6d' | sed 's/^[ \t]*//;s/[ \t]*$//')
-	backup=$(echo "$summary" | sed -n '1p')
-	dbbackup=$(echo "$summary" | sed -n '2p')
-	migration=$(echo "$summary" | sed -n '3p')
-	offsite=$(echo "$summary" | sed -n '4p')
-	retrieve=$(echo "$summary" | sed -n '5p')
-	stgpool=$(echo "$summary" | sed -n '6p')
-	send_value tsm.summary.daily.backup "$backup"
-	send_value tsm.summary.daily.dbbackup "$dbbackup"
-	send_value tsm.summary.daily.migration "$migration"
-	send_value tsm.summary.daily.offsite "$offsite"
-	send_value tsm.summary.daily.retrieve "$retrieve"
-	send_value tsm.summary.daily.stgpool "$stgpool"
-}
-
-function tsm_tapes_errors { # Number of tapes with an error status
-	tapeErrors=$(tsm_cmd "SELECT COUNT(*) FROM volumes WHERE error_state='YES'" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3)
-	send_value tsm.tapes.errors.status "$tapeErrors"
-}
 
 function tsm_summary_total_stored { # Total data stored in TB
-	totalStored=$(tsm_cmd "SELECT CAST(FLOAT(SUM(logical_mb)) / 1024 / 1024 AS DEC(8,2)) FROM occupancy" | sed 's/^[ \t]*//' | tail -n +13 | head -n -3)
+	totalStored=$(tsm_cmd "SELECT SUM(logical_mb)*1024*1024 FROM occupancy")
 	send_value tsm.summary.total.stored "$totalStored"
 }
 
