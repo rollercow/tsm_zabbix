@@ -110,7 +110,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Drives</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -123,7 +123,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -144,7 +144,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Drives</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -157,7 +157,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -178,7 +178,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Drives</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -191,7 +191,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -225,7 +225,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -259,7 +259,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -280,7 +280,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Nodes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -293,7 +293,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -314,7 +314,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Nodes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -327,7 +327,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -348,7 +348,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Nodes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -361,7 +361,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -395,7 +395,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -429,7 +429,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -463,7 +463,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -497,7 +497,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -531,7 +531,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -565,7 +565,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -599,7 +599,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -633,7 +633,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -667,7 +667,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -681,14 +681,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.daily.backup" value_type="0">
-          <description>TSM - Daily Summary - Backed up in GB</description>
+          <description>TSM - Daily Summary - Backed up</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>GB</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -701,7 +701,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -715,14 +715,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.daily.dbbackup" value_type="0">
-          <description>TSM - Daily Summary - Database Backup in GB</description>
+          <description>TSM - Daily Summary - Database Backup</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>GB</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -735,7 +735,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -749,14 +749,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.daily.migration" value_type="0">
-          <description>TSM - Daily Summary - Data Migrated in GB</description>
+          <description>TSM - Daily Summary - Data Migrated</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>GB</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -769,7 +769,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -783,14 +783,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.daily.offsite" value_type="0">
-          <description>TSM - Daily Summary - Offsite Reclamation in GB</description>
+          <description>TSM - Daily Summary - Offsite Reclamation</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>GB</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -803,7 +803,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -817,14 +817,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.daily.retrieve" value_type="0">
-          <description>TSM - Daily Summary - Data Retrieved in GB</description>
+          <description>TSM - Daily Summary - Data Retrieved</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>GB</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -837,7 +837,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -851,14 +851,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.daily.stgpool" value_type="0">
-          <description>TSM - Daily Summary - Storage Pool Backed up in GB</description>
+          <description>TSM - Daily Summary - Storage Pool Backed up</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>GB</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -871,7 +871,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -885,14 +885,14 @@
           </applications>
         </item>
         <item type="2" key="tsm.summary.total.stored" value_type="0">
-          <description>TSM - Summary - Total Amount of Data Stored in TB</description>
+          <description>TSM - Summary - Total Amount of Data Stored</description>
           <ipmi_sensor></ipmi_sensor>
           <delay>60</delay>
           <history>30</history>
           <trends>365</trends>
           <status>0</status>
-          <data_type>0</data_type>
-          <units></units>
+          <data_type>2</data_type>
+          <units>B</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -905,7 +905,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -926,7 +926,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Tapes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -939,7 +939,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -960,7 +960,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Tapes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -973,7 +973,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -994,7 +994,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Tapes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -1007,7 +1007,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -1028,7 +1028,7 @@
           <trends>365</trends>
           <status>0</status>
           <data_type>0</data_type>
-          <units></units>
+          <units>Tapes</units>
           <multiplier>0</multiplier>
           <delta>0</delta>
           <formula>0</formula>
@@ -1041,7 +1041,7 @@
           <publickey></publickey>
           <privatekey></privatekey>
           <params></params>
-          <trapper_hosts>localhost</trapper_hosts>
+          <trapper_hosts></trapper_hosts>
           <snmp_community></snmp_community>
           <snmp_oid></snmp_oid>
           <snmp_port>161</snmp_port>
@@ -1381,7 +1381,7 @@
           <name>{$LOW_SCRATCHVOLS}</name>
         </macro>
         <macro>
-          <value>118</value>
+          <value>274</value>
           <name>{$MAX_TAPES}</name>
         </macro>
       </macros>
