@@ -83,6 +83,33 @@
           <comments>TSM</comments>
         </trigger>
         <trigger>
+          <description>TSM - Very Low scratch volumes</description>
+          <type>0</type>
+          <expression>{Template_Tivoli_Storage_Manager:tsm.tapes.scratchvols.last(0)}&lt;{$LOW_SCRATCHVOLS}/2</expression>
+          <url></url>
+          <status>0</status>
+          <priority>3</priority>
+          <comments>TSM</comments>
+        </trigger>
+        <trigger>
+          <description>TSM - Extremely Low scratch volumes</description>
+          <type>0</type>
+          <expression>{Template_Tivoli_Storage_Manager:tsm.tapes.scratchvols.last(0)}&lt;{$LOW_SCRATCHVOLS}/4</expression>
+          <url></url>
+          <status>0</status>
+          <priority>4</priority>
+          <comments>TSM</comments>
+        </trigger>
+        <trigger>
+          <description>TSM - No scratch volumes available</description>
+          <type>0</type>
+          <expression>{Template_Tivoli_Storage_Manager:tsm.tapes.scratchvols.last(0)}=0</expression>
+          <url></url>
+          <status>0</status>
+          <priority>5</priority>
+          <comments>TSM</comments>
+        </trigger>
+        <trigger>
           <description>TSM - Large number of tapes ejected</description>
           <type>0</type>
           <expression>{Template_Tivoli_Storage_Manager:tsm.tapes.totalvols.change(0)}&lt;-6</expression>
@@ -1397,7 +1424,7 @@
             </graph_element>
           </graph_elements>
         </graph>
-        <graph name="TSM - Total data stored (TB)" width="900" height="200">
+        <graph name="TSM - Total data stored" width="900" height="200">
           <ymin_type>0</ymin_type>
           <ymax_type>0</ymax_type>
           <ymin_item_key></ymin_item_key>

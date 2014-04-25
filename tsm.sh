@@ -8,19 +8,11 @@
 # Tested with TSM 6.2 and zabbix 2.0.11
 #
 #################
-# INSTRUCTIONS  #
-#################
-# 1.) Put this script on your TSM server, or anywhere else with the TSM client installed.
-# 2.) Update the variables in the configuration section below
-# 3.) Import the template into Zabbix (make sure you change the "MAX_TAPES" and "LOW_SCRATCHVOLS" Macros!!)
-# 4.) Verify the schedule section at the bottom of this script meets your needs, I've included my cron entries for reference
-# 5.) 
-#
-#################
 # CONFIGURATION #
 #################
 zabbix_sender="/usr/bin/zabbix_sender"
 zabbix_config="/etc/zabbix_agentd.conf"
+zabbix_log="/dev/null"
 tsm_binary="/usr/bin/dsmadmc" # Path to the admin CLI binary tool
 tsm_user="ID" # TSM username
 tsm_pass="PASSWORD" # TSM Password
@@ -29,7 +21,7 @@ tsm_pass="PASSWORD" # TSM Password
 #  FUNCTIONS    #
 #################
 function send_value {
-	"$zabbix_sender" -c $zabbix_config -k $1 -o $2
+	"$zabbix_sender" -c $zabbix_config -k $1 -o $2 > $zabbix_log
 }
 
 function tsm_cmd {
@@ -174,6 +166,8 @@ function hourly {
     tsm_nodes_locked
     tsm_nodes_sessioncount
     tsm_summary_total_stored
+    #tsm_diskpool_usage
+    #tsm_logpool_usage
 }
 
 if [[ "$1" == *hourly* ]]; then
