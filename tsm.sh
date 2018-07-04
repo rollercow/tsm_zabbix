@@ -28,6 +28,32 @@ function tsm_cmd {
 	"$tsm_binary" -id=$tsm_user -pa=$tsm_pass -dataonly=yes "$1" | grep -v ANS0102W # shuts up persistent warning
 }
 
+function SQLMangle {
+	#Use '/' to seperate keys values
+	#Use '^' to seperate peramiters
+	#use '%' to seperate things
+	#         Split into things | format the start  | map keys to values  | tidy last one| join peramiters     | end lines        | trim the ,
+	echo $@ |  sed 's/ % /\n/g' | sed 's/^/\t{ "{/' | sed 's/ \/ /}":"/g' | sed 's/ %//' | sed 's/ ^ /", "{/g' | sed 's/ ^/" },/' | sed '$ s/.$//'
+}
+
+function discoverizer {
+	if [ $# -gt 0 ]
+	then
+		echo "{"
+		echo -e "\t\"data\":[\n"
+		SQLMangle $a
+		echo -e "\n\t]\n"
+		echo "}"
+	fi
+}
+
+##
+#You'd do' something like
+#a=`tsm_cmd "select '#DRVNAME','/',drive_name, '^', '#LIBNAME','/',LIBRARY_NAME,'^', '#TYPE','/',DEVICE_TYPE,'^','%' from drives" `
+#b=discoverizer $a
+#send_value tsm.drives.discovery %a
+##
+
 #################
 #  TAPE STATS   #
 #################
