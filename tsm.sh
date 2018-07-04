@@ -73,7 +73,7 @@ function tsm_drives_empty { # Number of "empty" Drives within your library
 #################
 
 function tsm_diskpool_usage { # See NOTES
-	diskpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'DISKPOOL' ORDER BY stgpool_name DESC" | tail -n +13 | head -n -3)
+	diskpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'DISKPOOL' ORDER BY stgpool_name DESC")
 	echo "$diskpool" | while read disk _ num
 	do
 		send_value tsm.pools."${disk:(-5)}" "$num"
@@ -81,7 +81,7 @@ function tsm_diskpool_usage { # See NOTES
 }
 
 function tsm_logpool_usage { # See NOTES
-	logpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'LOGPOOL' ORDER BY stgpool_name DESC" | tail -n +13 | head -n -3)
+	logpool=$(tsm_cmd "SELECT volume_name,stgpool_name,pct_utilized FROM volumes WHERE stgpool_name= 'LOGPOOL' ORDER BY stgpool_name DESC")
 	echo "$logpool" | while read log _ num
 	do 
 		send_value tsm.pools."${log:(-4)}" "$num"
