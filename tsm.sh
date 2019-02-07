@@ -7,25 +7,36 @@
 #
 # Tested with TSM 6.2 and zabbix 2.0.11
 #
+####################################################################################
+#
+# Set option to connect directly to TSM server by -SE 
+# fix zabbix_sender need know the agent hostname as registered in Zabbix frontend -s
+# Tested with TSM 7.1 
+# Modify by Haim Cohen 2019
+#
+####################################################################################
+#
 #################
 # CONFIGURATION #
 #################
 zabbix_sender="/usr/bin/zabbix_sender"
-zabbix_config="/etc/zabbix_agentd.conf"
+zabbix_mon="NODE_NAME_IN_ZABBIX_FRONEND" # agent hostname as registered in Zabbix frontend
+zabbix_config="/etc/zabbix/zabbix_agentd.conf"
 zabbix_log="/dev/null"
 tsm_binary="/usr/bin/dsmadmc" # Path to the admin CLI binary tool
-tsm_user="ID" # TSM username
-tsm_pass="PASSWORD" # TSM Password
+tsm_se="TSM_SRV" # target tsm server name
+tsm_user="admin" # TSM username
+tsm_pass="P@ssw0rd!" # TSM Password
 
 #################
 #  FUNCTIONS    #
 #################
 function send_value {
-	"$zabbix_sender" -c $zabbix_config -k $1 -o $2 > $zabbix_log
+        "$zabbix_sender" -c $zabbix_config -s $zabbix_mon -k $1 -o $2 > $zabbix_log
 }
 
 function tsm_cmd {
-	"$tsm_binary" -id=$tsm_user -pa=$tsm_pass -dataonly=yes "$1" | grep -v ANS0102W # shuts up persistent warning
+        "$tsm_binary" -se=$tsm_se -id=$tsm_user -pa=$tsm_pass -dataonly=yes "$1" | grep -v ANS0102W # shuts up persistent warning
 }
 
 #################
